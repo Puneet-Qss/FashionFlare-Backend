@@ -22,14 +22,18 @@ const login = async (req, res, next) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    console.log("Logged in successfully");
     const accessToken = jwt.sign({ email: user.email }, accessTokenSecret, {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ message: "Login successful", accessToken });
+    res.status(200).json({
+      message: "Login successful",
+      accessToken,
+      client_id: user?.user_id,
+    });
   } catch (error) {
     console.error("Error logging in:", error);
+
     res.status(500).json({ error: "Internal server error" });
   }
 };

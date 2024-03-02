@@ -1,37 +1,45 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 function generateUniqueThreeDigitNumber() {
   return Math.floor(100 + Math.random() * 900);
 }
 
-const userSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
-    user_id: {
+    client_id: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    prod_id: {
       type: Number,
       unique: true,
       required: true,
       default: generateUniqueThreeDigitNumber,
     },
-    firstName: {
+    prod_category: {
       type: String,
       required: true,
       max: 20,
     },
-    lastName: {
+    product_name: {
       type: String,
       required: true,
       max: 20,
     },
-    email: {
+    product_price: {
       type: String,
       required: true,
-      unique: true,
+      max: 20,
     },
-    password: {
+    product_desc: {
       type: String,
       required: true,
-      unique: true,
+      max: 20,
+    },
+    user_type: {
+      type: String,
+      required: true,
     },
     accessToken: {
       type: String,
@@ -41,4 +49,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Products", productSchema);
